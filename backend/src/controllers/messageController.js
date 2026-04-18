@@ -4,7 +4,6 @@ import {
     emitNewMessage,
     updateConversationAfterCreateMessage,
 } from "../utils/messageHelper.js";
-import { io } from "../socket/index.js";
 
 export const sendDirectMessage = async (req, res) => {
     try {
