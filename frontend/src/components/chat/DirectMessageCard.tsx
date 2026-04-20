@@ -10,7 +10,7 @@ import StatusBadge from './StatusBadge'
 import UnreadCountBadge from './UnreadCountBadge'
 const DirectMessageCard = ({ convo }: { convo: Conversation }) => {
     const { user } = useAuthStore()
-    const { activeConversationId, setActiveConversation, messages } = useChatStore()
+    const { activeConversationId, setActiveConversation, messages, fetchMessages } = useChatStore()
     if (!user) return null;
     const otherUser = convo.participants.find((p) => p._id !== user._id);
     if (!otherUser) return null;
@@ -19,7 +19,7 @@ const DirectMessageCard = ({ convo }: { convo: Conversation }) => {
     const handlleSelectConversation = async (id: string) => {
         setActiveConversation(id);
         if (!messages[id]) {
-
+            await fetchMessages(id);
         }
     }
     return (

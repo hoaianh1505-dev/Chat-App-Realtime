@@ -18,9 +18,14 @@ export const sendDirectMessage = async (req, res) => {
 
         if (conversationId) {
             conversation = await Conversation.findById(conversationId);
+        } else if (recipientId) {
+            conversation = await Conversation.findOne({
+                type: "direct",
+                "participants.userId": { $all: [senderId, recipientId] },
+            });
         }
 
-        if (!conversation) {
+        if (!conversation && recipientId) {
             conversation = await Conversation.create({
                 type: "direct",
                 participants: [
@@ -30,6 +35,10 @@ export const sendDirectMessage = async (req, res) => {
                 lastMessageAt: new Date(),
                 unreadCounts: new Map(),
             });
+        }
+
+        if (!conversation) {
+            return res.status(400).json({ message: "Thiếu conversationId hoặc recipientId hợp lệ" });
         }
 
         const message = await Message.create({
