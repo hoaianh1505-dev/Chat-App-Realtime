@@ -5,7 +5,7 @@ import { useAuthStore } from '@/stores/useAuthStore'
 import { useChatStore } from '@/stores/useChatStore'
 import { cn } from '@/lib/utils'
 import { User } from 'lucide-react'
-import UserAvatar from './userAvatar'
+import UserAvatar from './UserAvatar'
 import StatusBadge from './StatusBadge'
 import UnreadCountBadge from './UnreadCountBadge'
 const DirectMessageCard = ({ convo }: { convo: Conversation }) => {

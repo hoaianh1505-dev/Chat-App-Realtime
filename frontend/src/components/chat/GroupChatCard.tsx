@@ -7,14 +7,14 @@ import GroupChatAvatar from './GroupChatAvatar'
 
 const GroupChatCard = ({ convo }: { convo: Conversation }) => {
     const { user } = useAuthStore()
-    const { activeConversationId, setActiveConversation, messages } = useChatStore()
+    const { activeConversationId, setActiveConversation, messages, fetchMessages } = useChatStore()
     if (!user) return null;
     const unreadCount = convo.unreadCounts[user._id] || 0;
     const name = convo.group?.name ?? " ";
     const handleSelecttConversation = async (id: string) => {
         setActiveConversation(id);
         if (!messages[id]) {
-
+            await fetchMessages(id);
         }
     }
     return (
