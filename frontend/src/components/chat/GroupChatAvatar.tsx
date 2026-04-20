@@ -1,6 +1,7 @@
 import type { Participant } from '@/types/chat'
 import React from 'react'
-import UserAvatar from './userAvatar'
+import { Ellipsis } from 'lucide-react'
+import UserAvatar from './UserAvatar'
 interface GroupChatAvatarProps {
     participants: Participant[]
     type: "chat" | "sidebar"
@@ -21,7 +22,14 @@ const GroupChatAvatar = ({ participants, type }: GroupChatAvatarProps) => {
         )
     }
     return (
-        <div className="relative flex -space-x-2 *:data-[slot=avatar]:ring-background &:data-[slot=avatar}:ring-2]"></div>
+        <div className="relative flex -space-x-2 *:data-[slot=avatar]:ring-background &:data-[slot=avatar}:ring-2]">
+            {avatars}
+            {participants.length > limit &&
+                (<div className="flex items-center z-10 justify-center  size-8 rounded-full bg-muted ring-2 ring-background text-muted-foreground">
+                    <Ellipsis className='size-4' />
+                </div>)
+            }
+        </div>
     )
 }
 
