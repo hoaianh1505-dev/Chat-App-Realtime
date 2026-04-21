@@ -4,7 +4,7 @@ import {
     emitNewMessage,
     updateConversationAfterCreateMessage,
 } from "../utils/messageHelper.js";
-
+import { io } from "../socket/index.js";
 export const sendDirectMessage = async (req, res) => {
     try {
         const { recipientId, content, conversationId } = req.body;
@@ -50,6 +50,7 @@ export const sendDirectMessage = async (req, res) => {
         updateConversationAfterCreateMessage(conversation, message, senderId);
 
         await conversation.save();
+
 
         emitNewMessage(io, conversation, message);
 

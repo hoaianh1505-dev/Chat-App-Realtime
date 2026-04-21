@@ -23,7 +23,7 @@ export const updateConversationAfterCreateMessage = (
 };
 
 export const emitNewMessage = (io, conversation, message) => {
-    io.to(conversation._id.toString()).emit("new-message", {
+    const payload = {
         message,
         conversation: {
             _id: conversation._id,
@@ -31,5 +31,11 @@ export const emitNewMessage = (io, conversation, message) => {
             lastMessageAt: conversation.lastMessageAt,
         },
         unreadCounts: conversation.unreadCounts,
+    };
+
+    io.to(conversation._id.toString()).emit("new-message", payload);
+
+    conversation.participants.forEach((p) => {
+        io.to(`user:${p.userId.toString()}`).emit("new-message", payload);
     });
 };
